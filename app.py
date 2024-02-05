@@ -19,33 +19,23 @@ from model import PointHistoryClassifier
 def get_args():
     parser = argparse.ArgumentParser()
 
-    parser.add_argument("--device", type=int, default=0)
-    parser.add_argument("--width", help='cap width', type=int, default=960)
-    parser.add_argument("--height", help='cap height', type=int, default=540)
-
+    parser.add_argument("--device", default=0)
+    parser.add_argument("--width", default=960)
+    parser.add_argument("--height", default=540)
     parser.add_argument('--use_static_image_mode', action='store_true')
-    parser.add_argument("--min_detection_confidence",
-                        help='min_detection_confidence',
-                        type=float,
-                        default=0.7)
-    parser.add_argument("--min_tracking_confidence",
-                        help='min_tracking_confidence',
-                        type=int,
-                        default=0.5)
-
+    parser.add_argument("--min_detection_confidence",default=0.7)
+    parser.add_argument("--min_tracking_confidence",default=0.5)
     args = parser.parse_args()
 
     return args
 
 
 def main():
-    # 引数解析 #################################################################
     args = get_args()
-
-    cap_device = args.device
-    cap_width = args.width
-    cap_height = args.height
-
+    print(args.__dict__)
+    device = args.device
+    width = args.width
+    height = args.height
     use_static_image_mode = args.use_static_image_mode
     min_detection_confidence = args.min_detection_confidence
     min_tracking_confidence = args.min_tracking_confidence
@@ -53,9 +43,9 @@ def main():
     use_brect = True
 
     # カメラ準備 ###############################################################
-    cap = cv.VideoCapture(cap_device)
-    cap.set(cv.CAP_PROP_FRAME_WIDTH, cap_width)
-    cap.set(cv.CAP_PROP_FRAME_HEIGHT, cap_height)
+    cap = cv.VideoCapture(device)
+    cap.set(cv.CAP_PROP_FRAME_WIDTH, width)
+    cap.set(cv.CAP_PROP_FRAME_HEIGHT, height)
 
     # モデルロード #############################################################
     mp_hands = mp.solutions.hands
