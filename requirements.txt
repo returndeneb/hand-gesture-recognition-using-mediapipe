@@ -1,4 +1,3 @@
-sklearn
 mediapipe 
 opencv-python 
 tensorflow 

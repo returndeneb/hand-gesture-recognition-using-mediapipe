@@ -11,7 +11,7 @@ import cv2 as cv
 import numpy as np
 import mediapipe as mp
 
-from utils import CvFpsCalc
+# from utils import CvFpsCalc
 from model import KeyPointClassifier
 from model import PointHistoryClassifier
 
@@ -69,7 +69,7 @@ def main():
             row[0] for row in point_history_classifier_labels
         ]
 
-    cvFpsCalc = CvFpsCalc(buffer_len=10)
+    # cvFpsCalc = CvFpsCalc(buffer_len=10)
 
     history_length = 16
     point_history = deque(maxlen=history_length)
@@ -79,7 +79,7 @@ def main():
     mode = 0
 
     while True:
-        fps = cvFpsCalc.get()
+        # fps = cvFpsCalc.get()
         key = cv.waitKey(10)
         if key == 27:  # ESC
             break
@@ -138,7 +138,7 @@ def main():
             point_history.append([0, 0])
 
         debug_image = draw_point_history(debug_image, point_history)
-        debug_image = draw_info(debug_image, fps, mode, number)
+        # debug_image = draw_info(debug_image, fps, mode, number)
         cv.imshow('Hand Gesture Recognition', debug_image)
 
     cap.release()
