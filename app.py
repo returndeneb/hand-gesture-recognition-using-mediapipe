@@ -18,8 +18,8 @@ def get_args():
     parser = argparse.ArgumentParser()
 
     parser.add_argument("--device", default=0)
-    parser.add_argument("--width", default=9999)
-    parser.add_argument("--height", default=9999)
+    parser.add_argument("--width", default=1920)
+    parser.add_argument("--height", default=1080)
     parser.add_argument('--use_static_image_mode', action='store_true')
     parser.add_argument("--min_detection_confidence",default=0.7)
     parser.add_argument("--min_tracking_confidence",default=0.5)
@@ -178,7 +178,7 @@ def calc_landmark_list(image, landmarks):
         landmark_x = min(int(landmark.x * image_width), image_width - 1)
         landmark_y = min(int(landmark.y * image_height), image_height - 1)
         landmakr_z = min(int(landmark.z * image_height), image_height - 1)
-        landmark_point.append([landmark_x, landmark_y,landmakr_z])
+        landmark_point.append([landmark_x, landmark_y, landmakr_z])
 
     return landmark_point
 
@@ -254,7 +254,6 @@ def draw_landmarks(image, landmark_point_ori,x,y):
                 (0, 0, 0), 6)
         cv.line(image, tuple(landmark_point[3]), tuple(landmark_point[4]),
                 (255, 255, 255), 2)
-
 
         cv.line(image, tuple(landmark_point[5]), tuple(landmark_point[6]),
                 (0, 0, 0), 6)
@@ -340,9 +339,18 @@ def draw_landmarks(image, landmark_point_ori,x,y):
     x = ((coeffi*(landmark_point_ori[8][0]-landmark_point_ori[5][0])+landmark_point_ori[5][0])+x)/2
     y = ((coeffi*(landmark_point_ori[8][1]-landmark_point_ori[5][1])+landmark_point_ori[5][1])+y)/2
     point = (int(x),int(y))
+    
+    # cv.arrowedLine(image,(landmark_point_ori[8][0],landmark_point_ori[8][1]),point,(0,255,0),10)
+    z = landmark_point_ori[8][2]
+    dz = abs(landmark_point_ori[8][2]-landmark_point_ori[5][2])//8
+    dx = landmark_point_ori[8][0]-landmark_point_ori[5][0]
+    dy = landmark_point_ori[8][1]-landmark_point_ori[5][1]
+    x = z*dx/dz
+    y = z*dy/dz
+    point = (960-int(x),0-int(y))
     cv.circle(image, point, 10, (255, 0, 0),-1)
     cv.arrowedLine(image,(landmark_point_ori[8][0],landmark_point_ori[8][1]),point,(0,255,0),10)
-
+    
     text = f'Point Location: {point}'
     font = cv.FONT_HERSHEY_SIMPLEX
     font_scale = 1
