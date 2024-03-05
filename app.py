@@ -335,18 +335,19 @@ def draw_landmarks(image, landmark_point_ori,x,y):
                 (0, 0, 0), 6)
         cv.line(image, tuple(landmark_point[17]), tuple(landmark_point[0]),
                 (255, 255, 255), 2)
-    coeffi = abs(landmark_point_ori[8][2]-landmark_point_ori[5][2])//8
-    x = ((coeffi*(landmark_point_ori[8][0]-landmark_point_ori[5][0])+landmark_point_ori[5][0])+x)/2
-    y = ((coeffi*(landmark_point_ori[8][1]-landmark_point_ori[5][1])+landmark_point_ori[5][1])+y)/2
-    point = (int(x),int(y))
+    # coeffi = abs(landmark_point_ori[8][2]-landmark_point_ori[5][2])//8
+    # x = ((coeffi*(landmark_point_ori[8][0]-landmark_point_ori[5][0])+landmark_point_ori[5][0])+x)/2
+    # y = ((coeffi*(landmark_point_ori[8][1]-landmark_point_ori[5][1])+landmark_point_ori[5][1])+y)/2
+    # point = (int(x),int(y))
     
     # cv.arrowedLine(image,(landmark_point_ori[8][0],landmark_point_ori[8][1]),point,(0,255,0),10)
-    z = landmark_point_ori[8][2]
-    dz = abs(landmark_point_ori[8][2]-landmark_point_ori[5][2])//8
+    z = landmark_point_ori[5][2]
+    dz = abs(landmark_point_ori[8][2]-landmark_point_ori[5][2])
+    print(dz)
     dx = landmark_point_ori[8][0]-landmark_point_ori[5][0]
     dy = landmark_point_ori[8][1]-landmark_point_ori[5][1]
-    x = z*dx/dz
-    y = z*dy/dz
+    x = (4.5*z*dx/dz+x)/2
+    y = (4.5*z*dy/dz+y)/2
     point = (960-int(x),0-int(y))
     cv.circle(image, point, 10, (255, 0, 0),-1)
     cv.arrowedLine(image,(landmark_point_ori[8][0],landmark_point_ori[8][1]),point,(0,255,0),10)
